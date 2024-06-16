@@ -1,0 +1,67 @@
+SIGNAL GENERATION:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate a sine wave
+t = np.arange(0, 1, 0.01)
+sine_wave = np.sin(2 * np.pi * 10 * t)
+
+# Generate a square wave
+square_wave = np.sign(np.sin(2 * np.pi * 10 * t))
+
+# Generate white noise
+white_noise = np.random.randn(len(t))
+
+# Plot the signals
+plt.figure()
+
+plt.subplot(3,1,1)
+plt.plot(t, sine_wave)
+plt.title('Sine Wave')
+
+plt.subplot(3,1,2)
+plt.plot(t, square_wave)
+plt.title('Square Wave')
+
+plt.subplot(3,1,3)
+plt.plot(t, white_noise)
+plt.title('White Noise')
+
+plt.tight_layout()
+plt.show()
+
+
+Signal Filtering:
+
+from scipy.signal import butter, filtfilt
+
+# Design a low-pass filter
+b, a = butter(6, 0.2)
+
+# Apply the filter to the sine wave
+filtered_sine = filtfilt(b, a, sine_wave)
+
+# Plot the filtered signal
+plt.figure()
+plt.plot(t, filtered_sine)
+plt.title('Filtered Sine Wave')
+plt.show()
+
+
+Signal Visualization:
+
+
+from scipy.fft import fft
+
+# Frequency-domain plot of the filtered signal
+freqs = np.fft.fftfreq(len(t), 0.01)
+fft_filtered_sine = fft(filtered_sine)
+
+plt.figure()
+plt.plot(freqs, np.abs(fft_filtered_sine))
+plt.title('Frequency Response of Filtered Sine Wave')
+plt.xlim(0, 50)
+plt.show()
+
